@@ -62,6 +62,16 @@ NODE_ENV=production JWT_SECRET=... MONGO_URI=... npm start
 
 The API serves the built client from the same origin, so the auth cookie is first-party (`SameSite=Strict`, `Secure`). To host the client elsewhere, set `CLIENT_ORIGIN` on the server and `VITE_API_URL` on the client, and serve both over HTTPS.
 
+### Vercel
+
+[`vercel.json`](vercel.json) deploys the repo as one project with two services on one domain: `client` (Vite, serves `/`) and `server` (Express, serves `/api/*`, entrypoint `app.js`). The client calls the API at the relative path `/api`, so the cookie stays first-party.
+
+- In the Vercel project, set `MONGO_URI` and `JWT_SECRET` (the API refuses to start in production without a real secret).
+- In MongoDB Atlas → Network Access, allow `0.0.0.0/0`, since Vercel functions have no fixed IP.
+- The API connects to MongoDB on the first request and reuses the connection while the function is warm.
+- Seed the database from your machine with `npm run seed` (it wipes the target database first).
+- Test locally with `vercel dev`.
+
 ---
 
 ## What's in the seed

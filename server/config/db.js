@@ -23,6 +23,18 @@ export async function connectDB() {
   return { memory: Boolean(memoryServer) };
 }
 
+// Serverless (Vercel) imports app.js without running server.js, so connect on first use and reuse
+// the connection while the function instance stays warm.
+let connecting = null;
+export function ensureDB() {
+  if (mongoose.connection.readyState === 1) return Promise.resolve();
+  connecting ??= connectDB().catch((err) => {
+    connecting = null;
+    throw err;
+  });
+  return connecting;
+}
+
 export async function disconnectDB() {
   await mongoose.disconnect();
   if (memoryServer) await memoryServer.stop();

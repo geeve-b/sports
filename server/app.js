@@ -5,6 +5,7 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import { ensureDB } from './config/db.js';
 import { env } from './config/env.js';
 import { errorHandler, notFound } from './middleware/error.js';
 import adminRoutes from './routes/adminRoutes.js';
@@ -41,6 +42,7 @@ app.use(cookieParser());
 if (!env.isProd) app.use(morgan('dev'));
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, time: new Date().toISOString() }));
+app.use('/api', (_req, _res, next) => ensureDB().then(() => next(), next));
 app.use('/api/auth', authRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/players', playerRoutes);
@@ -52,8 +54,8 @@ app.use('/api/announcements', announcementRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api', notFound);
 
-// In production the API also serves the built client.
-if (env.isProd) {
+// In production the API also serves the built client. On Vercel the client is its own service.
+if (env.isProd && !process.env.VERCEL) {
   const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../client/dist');
   app.use(express.static(dist, { index: false, maxAge: '7d' }));
   app.get('*', (_req, res) => res.sendFile(path.join(dist, 'index.html')));
