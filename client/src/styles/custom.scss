@@ -1,0 +1,693 @@
+// =============================================================================
+//  WILDPLAY — design system
+//  "Live sports broadcast meets stadium scoreboard."
+//
+//  Everything above the Bootstrap @import replaces a Bootstrap !default.
+//  Night match (dark) is the default: <html data-bs-theme="dark">.
+//  Day match is <html data-bs-theme="light">, toggled by ThemeContext.
+//
+//  Rules of the house:
+//    - Flood yellow is the ONLY bright colour. Red card = injuries/losses/alerts.
+//    - No shadows for depth. 1px rules separate things.
+//    - Corners are sharp. Angles come from clip-path, never border-radius.
+//    - Never use .text-primary (flood is unreadable on chalk). Use .text-accent.
+// =============================================================================
+
+// ---- 1. Palette -------------------------------------------------------------
+$ink:       #0E0F0C;   // night pitch
+$chalk:     #F2F0E6;   // pitch-line off-white
+$flood:     #E8FF3A;   // floodlight accent
+$turf:      #1F3B2D;   // secondary surfaces
+$red-card:  #E5322D;   // injuries, losses, alerts (marks, bars, borders)
+$red-card-deep: #C0241F; // red fills that carry text (AA 5.3:1 with chalk)
+$chalk-2:   #E4E1D3;   // day-match secondary surface
+$turf-deep: #15291F;   // night-match tertiary surface
+
+// Warm grey ramp mixed from ink + chalk, so no cool Bootstrap greys leak in.
+$white:    $chalk;
+$black:    $ink;
+$gray-100: mix($ink, $chalk, 4%);
+$gray-200: mix($ink, $chalk, 10%);
+$gray-300: mix($ink, $chalk, 20%);
+$gray-400: mix($ink, $chalk, 32%);
+$gray-500: mix($ink, $chalk, 46%);
+$gray-600: mix($ink, $chalk, 60%);
+$gray-700: mix($ink, $chalk, 72%);
+$gray-800: mix($ink, $chalk, 84%);
+$gray-900: mix($ink, $chalk, 92%);
+
+$primary:   $flood;
+$secondary: $turf;
+$success:   $flood;
+$info:      $chalk;
+$warning:   $chalk;      // "doubtful" is shown with a hatch pattern, not a colour
+$danger:    $red-card-deep;
+$light:     $chalk;
+$dark:      $ink;
+
+$color-contrast-dark:  $ink;
+$color-contrast-light: $chalk;
+$min-contrast-ratio:   4.5;
+
+// ---- 2. Global switches -----------------------------------------------------
+$enable-shadows:          false;
+$enable-gradients:        false;
+$enable-rounded:          true;   // kept on so radius vars apply, but they are ~0
+$enable-dark-mode:        true;
+$color-mode-type:         data;
+$enable-validation-icons: false;
+$enable-negative-margins: true;
+
+// ---- 3. Body + colour modes -------------------------------------------------
+// Day match (light)
+$body-bg:                 $chalk;
+$body-color:              $ink;
+$body-secondary-color:    rgba($ink, .66);
+$body-secondary-bg:       $chalk-2;
+$body-tertiary-color:     rgba($ink, .5);
+$body-tertiary-bg:        mix($ink, $chalk, 6%);
+$body-emphasis-color:     $ink;
+$border-color:            mix($ink, $chalk, 24%);
+$border-color-translucent: rgba($ink, .2);
+$headings-color:          $ink;
+$link-color:              $ink;
+$link-hover-color:        $turf;
+
+// Night match (dark)
+$body-bg-dark:              $ink;
+$body-color-dark:           $chalk;
+$body-secondary-color-dark: rgba($chalk, .62);
+$body-secondary-bg-dark:    $turf;
+$body-tertiary-color-dark:  rgba($chalk, .45);
+$body-tertiary-bg-dark:     $turf-deep;
+$body-emphasis-color-dark:  $chalk;
+$border-color-dark:         mix($chalk, $ink, 26%);
+$border-color-translucent-dark: rgba($chalk, .18);
+$headings-color-dark:       $chalk;
+$link-color-dark:           $flood;
+$link-hover-color-dark:     $chalk;
+$primary-text-emphasis-dark: $flood;
+$danger-text-emphasis-dark:  #FF6A5F;   // red that passes AA on ink
+$danger-text-emphasis:       #B3201B;   // red that passes AA on chalk
+$form-invalid-color:         #B3201B;
+$form-invalid-border-color:  $red-card;
+$form-invalid-color-dark:    #FF6A5F;
+$form-invalid-border-color-dark: $red-card;
+
+$link-decoration:              underline;
+$link-underline-offset:        .2em;
+$link-hover-decoration:        underline;
+
+// ---- 4. Typography ----------------------------------------------------------
+$font-family-sans-serif: "Barlow", "Archivo", "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace:  "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+$font-family-base:       $font-family-sans-serif;
+$font-family-display:    "Anton", "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+
+$font-size-base:   1rem;
+$font-weight-base: 500;
+$line-height-base: 1.5;
+$small-font-size:  .8125rem;
+
+$headings-font-family:  $font-family-display;
+$headings-font-weight:  400;     // Anton has one weight; never fake-bold it
+$headings-line-height:  .92;
+$headings-margin-bottom: .5rem;
+
+$h1-font-size: 4rem;
+$h2-font-size: 3rem;
+$h3-font-size: 2.25rem;
+$h4-font-size: 1.75rem;
+$h5-font-size: 1.375rem;
+$h6-font-size: 1rem;
+
+$display-font-family: $font-family-display;
+$display-font-weight: 400;
+$display-line-height: .85;
+$display-font-sizes: (
+  1: 10rem,    // 160px — countdowns, jersey numbers
+  2: 8rem,
+  3: 6rem,
+  4: 4.5rem,
+  5: 3.5rem,
+  6: 2.5rem,
+);
+
+$lead-font-size:   1.25rem;
+$lead-font-weight: 500;
+
+// ---- 5. Shape ---------------------------------------------------------------
+$border-width:        1px;
+$border-radius:       2px;
+$border-radius-sm:    0;
+$border-radius-lg:    4px;
+$border-radius-xl:    4px;
+$border-radius-xxl:   4px;
+$border-radius-pill:  0;    // pills become tags
+
+$box-shadow:       none;
+$box-shadow-sm:    none;
+$box-shadow-lg:    none;
+$box-shadow-inset: none;
+
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: .25rem,
+  2: .5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 3rem,
+  6: 4.5rem,
+  7: 6rem,
+);
+
+// ---- 6. Focus ---------------------------------------------------------------
+// Two-tone ring: ink inner, flood outer. Readable on both night and day.
+$focus-ring-width:      2px;
+$focus-ring-opacity:    1;
+$focus-ring-color:      $flood;
+$focus-ring-blur:       0;
+$focus-ring-box-shadow: 0 0 0 2px $ink, 0 0 0 4px $flood;
+
+$input-btn-focus-width:        2px;
+$input-btn-focus-color-opacity: 1;
+$input-btn-focus-color:        $flood;
+$input-btn-focus-blur:         0;
+$input-btn-focus-box-shadow:   0 0 0 2px $ink, 0 0 0 4px $flood;
+
+// ---- 7. Buttons — sharp, uppercase, tracked ---------------------------------
+$btn-font-family:   $font-family-sans-serif;
+$btn-font-weight:   700;
+$btn-font-size:     .8125rem;
+$btn-line-height:   1;
+$btn-padding-y:     .95rem;
+$btn-padding-x:     1.6rem;
+$btn-font-size-sm:  .6875rem;
+$btn-padding-y-sm:  .6rem;
+$btn-padding-x-sm:  1rem;
+$btn-font-size-lg:  .9375rem;
+$btn-padding-y-lg:  1.2rem;
+$btn-padding-x-lg:  2.25rem;
+$btn-border-width:  1px;
+$btn-border-radius:    0;
+$btn-border-radius-sm: 0;
+$btn-border-radius-lg: 0;
+$btn-box-shadow:        none;
+$btn-active-box-shadow: none;
+$btn-focus-box-shadow:  $input-btn-focus-box-shadow;
+$btn-disabled-opacity:  .35;
+$btn-transition: color .16s ease, background-color .16s ease, border-color .16s ease, transform .12s ease;
+
+// ---- 8. Inputs — underlined, not boxed --------------------------------------
+$input-bg:                transparent;
+$input-disabled-bg:       transparent;
+$input-border-width:      1px;     // only the bottom edge is drawn, see §11
+$input-border-radius:     0;
+$input-border-radius-sm:  0;
+$input-border-radius-lg:  0;
+$input-padding-y:         .6rem;
+$input-padding-x:         0;
+$input-font-size:         1.125rem;
+$input-font-weight:       500;
+$input-box-shadow:        none;
+$input-focus-bg:          transparent;
+$input-focus-border-color: $flood;
+$input-focus-box-shadow:  none;    // focus is shown by the underline bar
+$input-group-addon-bg:    transparent;
+
+$form-label-font-size:     .6875rem;
+$form-label-font-weight:   700;
+$form-label-margin-bottom: .15rem;
+$form-text-font-size:      .75rem;
+$form-text-margin-top:     .4rem;
+
+$form-select-padding-x:          0;
+$form-select-indicator-padding:  1.75rem;
+$form-select-bg-position:        right 0 center;
+$form-select-border-radius:      0;
+$form-select-box-shadow:         none;
+$form-select-focus-box-shadow:   none;
+
+$form-check-input-border-radius:        0;
+$form-check-input-checked-bg-color:     $flood;
+$form-check-input-checked-border-color: $flood;
+$form-check-input-checked-color:        $ink;
+$form-check-input-focus-box-shadow:     $input-btn-focus-box-shadow;
+$form-switch-border-radius:             0;
+$form-switch-checked-color:             $ink;
+
+// ---- 9. Components ----------------------------------------------------------
+// Cards: transparent with a thin rule. No "card look".
+$card-bg:                 transparent;
+$card-border-width:       1px;
+$card-border-color:       var(--bs-border-color);
+$card-border-radius:      0;
+$card-inner-border-radius: 0;
+$card-box-shadow:         none;
+$card-cap-bg:             transparent;
+$card-cap-padding-y:      .75rem;
+$card-cap-padding-x:      1.25rem;
+$card-spacer-y:           1.25rem;
+$card-spacer-x:           1.25rem;
+
+// Tables: broadcast league table (see §12)
+$table-bg:                transparent;
+$table-cell-padding-y:    .7rem;
+$table-cell-padding-x:    .9rem;
+$table-cell-padding-y-sm: .4rem;
+$table-cell-padding-x-sm: .6rem;
+$table-border-color:      var(--bs-border-color);
+$table-th-font-weight:    700;
+$table-group-separator-color: currentcolor;
+
+// Modals: slide in sideways like a lower-third
+$modal-content-bg:            var(--bs-body-bg);
+$modal-content-border-color:  var(--bs-body-color);
+$modal-content-border-radius: 0;
+$modal-content-inner-border-radius: 0;
+$modal-content-box-shadow-xs:    none;
+$modal-content-box-shadow-sm-up: none;
+$modal-backdrop-bg:           $ink;
+$modal-backdrop-opacity:      .85;
+$modal-header-padding:        1rem 1.5rem;
+$modal-inner-padding:         1.5rem;
+$modal-header-border-width:   0;
+$modal-footer-border-color:   var(--bs-border-color);
+$modal-fade-transform:        translate(-40px, 0);
+$modal-transition:            transform .28s cubic-bezier(.77, 0, .18, 1);
+
+$dropdown-bg:               var(--bs-body-bg);
+$dropdown-border-color:     var(--bs-body-color);
+$dropdown-border-radius:    0;
+$dropdown-inner-border-radius: 0;
+$dropdown-box-shadow:       none;
+$dropdown-font-size:        .875rem;
+$dropdown-item-padding-y:   .55rem;
+$dropdown-item-padding-x:   1rem;
+$dropdown-link-hover-bg:    var(--bs-tertiary-bg);
+$dropdown-link-active-bg:   $flood;
+$dropdown-link-active-color: $ink;
+
+$toast-background-color:        var(--bs-body-bg);
+$toast-border-color:            var(--bs-body-color);
+$toast-border-radius:           0;
+$toast-box-shadow:              none;
+$toast-header-background-color: transparent;
+$toast-header-border-color:     var(--bs-border-color);
+$toast-max-width:               380px;
+
+$offcanvas-bg-color:     var(--bs-body-bg);
+$offcanvas-border-color: var(--bs-body-color);
+$offcanvas-box-shadow:   none;
+
+$tooltip-bg:            $flood;
+$tooltip-color:         $ink;
+$tooltip-border-radius: 0;
+$tooltip-opacity:       1;
+$tooltip-font-size:     .6875rem;
+$tooltip-padding-y:     .35rem;
+$tooltip-padding-x:     .6rem;
+
+$popover-border-radius:  0;
+$popover-box-shadow:     none;
+$popover-border-color:   var(--bs-body-color);
+
+$badge-border-radius: 0;
+$badge-font-size:     .6875rem;
+$badge-font-weight:   700;
+$badge-padding-y:     .4em;
+$badge-padding-x:     .65em;
+
+$progress-height:        .375rem;
+$progress-border-radius: 0;
+$progress-bg:            var(--bs-border-color);
+$progress-bar-bg:        $flood;
+$progress-box-shadow:    none;
+
+$nav-link-font-weight:       700;
+$nav-tabs-border-radius:     0;
+$nav-tabs-link-active-bg:    transparent;
+$nav-pills-border-radius:    0;
+$nav-pills-link-active-bg:   $flood;
+$nav-pills-link-active-color: $ink;
+
+$pagination-border-radius:    0;
+$pagination-border-radius-sm: 0;
+$pagination-border-radius-lg: 0;
+$pagination-active-bg:        $flood;
+$pagination-active-border-color: $flood;
+$pagination-active-color:     $ink;
+
+$list-group-bg:            transparent;
+$list-group-border-radius: 0;
+$alert-border-radius:      0;
+$accordion-border-radius:  0;
+$accordion-inner-border-radius: 0;
+$accordion-button-active-bg:    transparent;
+$accordion-button-focus-box-shadow: $input-btn-focus-box-shadow;
+
+$hr-border-color: var(--bs-border-color);
+$hr-opacity:      1;
+
+$btn-close-color:           $ink;
+$btn-close-focus-shadow:    $input-btn-focus-box-shadow;
+
+$transition-base: all .2s cubic-bezier(.77, 0, .18, 1);
+$transition-fade: opacity .16s linear;
+
+// =============================================================================
+@import "bootstrap/scss/bootstrap";
+// =============================================================================
+//  Everything below is the Wildplay layer on top of compiled Bootstrap.
+// =============================================================================
+
+// ---- 10. Base ---------------------------------------------------------------
+:root,
+[data-bs-theme="dark"] {
+  --wp-accent-text: #{$flood};       // accent as TEXT (flood on night)
+  --wp-accent-line: #{$flood};       // underlines, rules, active bars
+  --wp-on-accent:   #{$ink};
+  --wp-red-text:    #FF6A5F;
+  --wp-rule-strong: #{rgba($chalk, .6)};
+  --wp-surface-2:   #{$turf};
+  --wp-pitch-opacity: .05;
+}
+[data-bs-theme="light"] {
+  --wp-accent-text: #{$ink};         // flood text is unreadable on chalk
+  --wp-accent-line: #{$ink};
+  --wp-on-accent:   #{$ink};
+  --wp-red-text:    #B3201B;
+  --wp-rule-strong: #{rgba($ink, .6)};
+  --wp-surface-2:   #{$chalk-2};
+  --wp-pitch-opacity: .08;
+}
+
+body {
+  font-feature-settings: "tnum" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  position: relative;
+  isolation: isolate;
+}
+
+// Pitch markings behind everything, very faint.
+$pitch-svg-night: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' fill='none' stroke='#{$chalk}' stroke-width='2'><rect x='40' y='40' width='1120' height='720'/><line x1='600' y1='40' x2='600' y2='760'/><circle cx='600' cy='400' r='92'/><circle cx='600' cy='400' r='4' fill='#{$chalk}'/><rect x='40' y='204' width='176' height='392'/><rect x='40' y='308' width='60' height='184'/><rect x='984' y='204' width='176' height='392'/><rect x='1100' y='308' width='60' height='184'/><path d='M216 340a92 92 0 0 1 0 120M984 340a92 92 0 0 0 0 120'/></svg>";
+$pitch-svg-day: str-replace($pitch-svg-night, "#{$chalk}", "#{$ink}");
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: escape-svg(url($pitch-svg-night)) center / cover no-repeat;
+  opacity: var(--wp-pitch-opacity);
+}
+[data-bs-theme="light"] body::before {
+  background-image: escape-svg(url($pitch-svg-day));
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+  text-transform: uppercase;
+  letter-spacing: .005em;
+  text-wrap: balance;
+}
+
+::selection { background: $flood; color: $ink; }
+
+:focus-visible {
+  outline: 0;
+  box-shadow: $input-btn-focus-box-shadow;
+}
+
+// ---- 11. Utilities ----------------------------------------------------------
+.text-accent  { color: var(--wp-accent-text) !important; }
+.text-red     { color: var(--wp-red-text) !important; }
+.bg-flood     { background-color: $flood !important; color: $ink !important; }
+.bg-turf      { background-color: var(--wp-surface-2) !important; }
+.border-strong { border-color: var(--wp-rule-strong) !important; }
+
+// 11–12px uppercase tracked label. Pair with .wp-num at 120px+.
+.wp-label {
+  font-family: $font-family-sans-serif;
+  font-size: .6875rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+  line-height: 1.2;
+}
+.wp-display { font-family: $font-family-display; text-transform: uppercase; line-height: .85; }
+.wp-num {
+  font-family: $font-family-monospace;
+  font-variant-numeric: tabular-nums slashed-zero;
+  letter-spacing: -.02em;
+}
+.wp-jersey {
+  font-family: $font-family-display;
+  line-height: .8;
+  font-variant-numeric: tabular-nums;
+}
+
+// TV lower-third: angled right edge.
+.wp-lower-third {
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--wp-cut, 18px)) 100%, 0 100%);
+  padding-right: calc(var(--wp-cut, 18px) + .75rem);
+}
+
+// Scoreboard skeleton: blinking dashes, not spinners.
+.wp-skeleton {
+  font-family: $font-family-monospace;
+  color: var(--bs-secondary-color);
+  letter-spacing: .3em;
+  animation: wp-blink 1.1s steps(2, jump-none) infinite;
+  &::before { content: "— — —"; }
+}
+@keyframes wp-blink { 50% { opacity: .25; } }
+
+// ---- 12. Bootstrap component restyles ----------------------------------------
+// Buttons
+.btn {
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  &:active { transform: translateY(1px); }
+}
+.btn-primary {
+  @include button-variant(
+    $flood, $flood,
+    $color: $ink,
+    $hover-background: $ink, $hover-border: $flood, $hover-color: $flood,
+    $active-background: $flood, $active-border: $flood, $active-color: $ink,
+    $disabled-background: $flood, $disabled-border: $flood, $disabled-color: $ink
+  );
+}
+[data-bs-theme="light"] .btn-primary { --bs-btn-border-color: #{$ink}; }
+
+.btn-chalk {
+  --bs-btn-color: var(--bs-body-color);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: var(--bs-body-color);
+  --bs-btn-hover-color: var(--bs-body-bg);
+  --bs-btn-hover-bg: var(--bs-body-color);
+  --bs-btn-hover-border-color: var(--bs-body-color);
+  --bs-btn-active-color: var(--bs-body-bg);
+  --bs-btn-active-bg: var(--bs-body-color);
+  --bs-btn-active-border-color: var(--bs-body-color);
+  --bs-btn-disabled-color: var(--bs-body-color);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--bs-body-color);
+}
+.btn-ghost {
+  --bs-btn-color: var(--bs-body-color);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: transparent;
+  --bs-btn-hover-color: var(--wp-accent-text);
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-active-color: var(--wp-accent-text);
+  --bs-btn-active-bg: transparent;
+  --bs-btn-active-border-color: transparent;
+  --bs-btn-disabled-color: var(--bs-body-color);
+  --bs-btn-disabled-border-color: transparent;
+  padding-inline: 0;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .45em;
+}
+.btn-red-card {
+  @include button-variant(
+    $red-card-deep, $red-card-deep,
+    $color: $chalk,
+    $hover-background: $ink, $hover-border: $red-card-deep, $hover-color: $chalk,
+    $active-background: $red-card-deep, $active-border: $red-card-deep, $active-color: $chalk
+  );
+}
+
+// Inputs: draw only the bottom edge.
+.form-control,
+.form-select {
+  border-width: 0 0 1px;
+  border-color: var(--wp-rule-strong);
+  font-weight: 500;
+  &:focus {
+    border-color: var(--wp-accent-line);
+    box-shadow: inset 0 -1px 0 var(--wp-accent-line);
+  }
+  &.is-invalid,
+  &.is-invalid:focus {
+    border-color: $red-card;
+    box-shadow: inset 0 -1px 0 $red-card;
+  }
+}
+.form-control::placeholder { color: var(--bs-tertiary-color); }
+.form-label {
+  font-size: .6875rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+}
+.form-check-label { font-weight: 600; }
+.invalid-feedback { color: var(--wp-red-text); font-weight: 600; }
+
+// Cards (used rarely; most surfaces are bespoke modules)
+.card-header {
+  font-family: $font-family-display;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  letter-spacing: .01em;
+  border-bottom-color: var(--bs-border-color);
+}
+
+// Tables: broadcast league table.
+.table {
+  --bs-table-color: var(--bs-body-color);
+  --bs-table-bg: transparent;
+  --bs-table-striped-color: var(--bs-body-color);
+  --bs-table-striped-bg: rgba(var(--bs-body-color-rgb), .035);
+  --bs-table-hover-color: var(--bs-body-color);
+  --bs-table-hover-bg: rgba(var(--bs-body-color-rgb), .07);
+  font-variant-numeric: tabular-nums;
+  border-top: 2px solid var(--bs-body-color);
+
+  > thead > tr > th {
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--bs-secondary-color);
+    border-bottom: 1px solid var(--bs-body-color);
+    white-space: nowrap;
+  }
+  > tbody > tr > * {
+    font-weight: 600;
+    vertical-align: middle;
+    border-left: 0;
+  }
+  > tbody > tr > :first-child {
+    border-left: 4px solid transparent;
+    transition: border-color .16s ease;
+  }
+  > tbody > tr:hover > :first-child { border-left-color: $flood; }
+  > :not(:first-child) { border-top: 0; }
+}
+
+// .table-league adds the TV standings treatment.
+.table-league {
+  .col-pos {
+    width: 3.5rem;
+    font-family: $font-family-display;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+  .col-num {
+    text-align: right;
+    font-family: $font-family-monospace;
+    font-weight: 500;
+  }
+  thead .col-num { text-align: right; }
+  .col-pts {
+    text-align: right;
+    font-family: $font-family-display;
+    font-size: 1.375rem;
+    background: $flood;
+    color: $ink;
+  }
+  thead .col-pts { background: $flood; color: $ink; }
+  tr.is-us > * { background: rgba($flood, .1); }
+}
+
+// Modals: flood lower-third header.
+.modal-content { border-width: 1px; }
+.modal-header {
+  background: $flood;
+  color: $ink;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
+  margin: -1px -1px 0;
+  .modal-title {
+    font-family: $font-family-display;
+    text-transform: uppercase;
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+  .btn-close { filter: none !important; margin-right: 1rem; }
+}
+
+// Dropdowns / toasts / offcanvas / tooltip / badge
+.dropdown-item { font-weight: 600; }
+.dropdown-header { @extend .wp-label; }
+
+.toast { border-left: 4px solid $flood; }
+.toast.toast-alert { border-left-color: $red-card; }
+.toast-header { @extend .wp-label; color: var(--bs-body-color); }
+
+.offcanvas { border-color: var(--bs-body-color) !important; }
+
+.tooltip-inner {
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-weight: 700;
+}
+
+.badge {
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.nav-link {
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: .75rem;
+}
+.nav-tabs .nav-link.active { box-shadow: inset 0 -3px 0 var(--wp-accent-line); border-color: transparent; }
+
+// ---- 13. Motion safety ------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ---- 14. App-level bits -------------------------------------------------------
+.wp-toasts {
+  top: calc(2.5rem + env(safe-area-inset-top, 0px)) !important;
+  z-index: 1090;
+}
+.form-control[type="color"] {
+  height: 2.75rem;
+  padding: .35rem 0;
+  cursor: pointer;
+}
+.form-control[type="color"]::-webkit-color-swatch { border: 1px solid var(--bs-body-color); border-radius: 0; }
+.form-control[type="color"]::-moz-color-swatch { border: 1px solid var(--bs-body-color); border-radius: 0; }
+textarea.form-control { border: 1px solid var(--wp-rule-strong); padding: .6rem .75rem; }
+textarea.form-control:focus { box-shadow: inset 0 -2px 0 var(--wp-accent-line); }
+.form-control-sm, .form-select-sm { font-size: .875rem; }
+.offcanvas-header { border-bottom: 1px solid var(--bs-body-color); }

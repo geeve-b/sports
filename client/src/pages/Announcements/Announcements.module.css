@@ -1,0 +1,41 @@
+.feed { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--bs-body-color); }
+.post {
+  display: grid;
+  gap: .5rem;
+  padding: 1.25rem 0 1.4rem;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+.lead .title { font-size: clamp(2.25rem, 5vw, 3.5rem); }
+.lead .body { font-size: 1.0625rem; }
+.urgent { box-shadow: inset 4px 0 0 var(--red-card); padding-left: 1rem; }
+.high { box-shadow: inset 4px 0 0 var(--bs-body-color); padding-left: 1rem; }
+
+.postHead { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
+.prio {
+  padding: .15rem .45rem;
+  background: var(--bs-body-color);
+  color: var(--bs-body-bg);
+  font-size: .625rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+.urgent .prio { background: var(--red-card-deep); color: var(--chalk); }
+.postActions { margin-left: auto; display: flex; gap: .25rem; }
+.postActions button {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  background: none;
+  border: 1px solid transparent;
+  color: var(--bs-body-color);
+}
+.postActions button:hover { border-color: var(--bs-body-color); }
+
+.title { font-size: clamp(1.6rem, 3vw, 2.1rem); line-height: .95; margin: 0; }
+.body { margin: 0; max-width: 68ch; line-height: 1.6; white-space: pre-line; color: var(--bs-secondary-color); }
+
+.composer { display: grid; gap: 1.25rem; }
+.composerFoot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+.sticky { position: sticky; top: 4rem; }

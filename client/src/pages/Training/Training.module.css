@@ -1,0 +1,87 @@
+.weekNav { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.5rem; }
+
+.week {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border: 1px solid var(--bs-body-color);
+}
+.day { display: grid; grid-template-rows: auto 1fr; min-height: 280px; min-width: 0; }
+.day + .day { border-left: 1px solid var(--bs-border-color); }
+
+.dayHead {
+  position: relative;
+  display: grid;
+  gap: .1rem;
+  padding: .6rem .7rem .5rem;
+  border-bottom: 1px solid var(--bs-body-color);
+}
+.dayNum { font-family: var(--font-display); font-size: 2.25rem; line-height: .85; }
+.today .dayHead { background: var(--flood); color: var(--ink); }
+.today .dayHead :global(.wp-label) { color: var(--ink); }
+.todayTag {
+  position: absolute;
+  right: .6rem;
+  top: .6rem;
+  font-size: .625rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.dayBody { display: grid; align-content: start; gap: .5rem; padding: .5rem; }
+
+.session {
+  display: grid;
+  gap: .25rem;
+  padding: .55rem .6rem .6rem;
+  text-align: left;
+  background: var(--wp-surface-2);
+  border: 1px solid var(--bs-border-color);
+  border-left: 4px solid var(--flood);
+  color: var(--bs-body-color);
+  transition: border-color var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+.session:hover { border-color: var(--bs-body-color); border-left-color: var(--flood); transform: translateX(2px); }
+.sessionTime { font-family: var(--font-mono); font-size: .75rem; font-weight: 700; }
+.sessionFocus { font-family: var(--font-display); text-transform: uppercase; font-size: 1.15rem; line-height: .95; overflow-wrap: anywhere; }
+.sessionMeta { font-size: .6875rem; color: var(--bs-secondary-color); }
+
+.addHere {
+  justify-self: start;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  background: none;
+  border: 1px dashed var(--bs-border-color);
+  color: var(--bs-secondary-color);
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease;
+}
+.day:hover .addHere, .addHere:focus-visible { opacity: 1; }
+.addHere:hover { border-color: var(--bs-body-color); color: var(--bs-body-color); }
+
+@media (max-width: 991.98px) {
+  .week { grid-template-columns: 1fr; }
+  .day { grid-template-columns: 5.5rem 1fr; grid-template-rows: none; min-height: 0; }
+  .day + .day { border-left: 0; border-top: 1px solid var(--bs-border-color); }
+  .dayHead { border-bottom: 0; border-right: 1px solid var(--bs-body-color); }
+  .todayTag { position: static; }
+  .addHere { opacity: 1; }
+}
+
+/* Drawer */
+.drawer { width: min(440px, 92vw) !important; }
+.drawerTime { margin: 0 0 .25rem; font-family: var(--font-mono); font-weight: 700; }
+.drawerFocus { font-size: clamp(2.25rem, 6vw, 3rem); line-height: .9; margin: 0 0 .5rem; }
+.drills { margin: 0; padding-left: 1.25rem; display: grid; gap: .3rem; }
+.drills li::marker { font-family: var(--font-mono); color: var(--bs-secondary-color); }
+
+.register { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--bs-body-color); }
+.register li { border-bottom: 1px solid var(--bs-border-color); }
+.registerRow { display: grid; grid-template-columns: auto 2rem 1fr auto; align-items: center; gap: .6rem; padding: .45rem 0; cursor: pointer; }
+.registerName { font-weight: 600; }
+.checkedIn { display: flex; align-items: center; gap: .5rem; margin: 0; font-weight: 700; color: var(--wp-accent-text); }

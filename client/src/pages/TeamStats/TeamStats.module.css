@@ -1,0 +1,33 @@
+.headline {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: end;
+  gap: 2rem 3.5rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 2px solid var(--bs-body-color);
+}
+.headlineSide { display: grid; gap: 1.75rem; min-width: 0; }
+
+.record { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--bs-body-color); }
+.record > div { flex: 1 1 5rem; display: grid; gap: .3rem; padding: .7rem .9rem; }
+.record > div + div { border-left: 1px solid var(--bs-border-color); }
+.recNum { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 3.75rem); line-height: .8; }
+.recW { background: var(--flood); color: var(--ink); }
+.recW :global(.wp-label) { color: var(--ink); }
+.recL .recNum { color: var(--wp-red-text); }
+
+.goals { display: grid; gap: .6rem; }
+.goalsLabels { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .875rem; color: var(--bs-secondary-color); }
+.goalsLabels b { font-family: var(--font-display); font-weight: 400; font-size: 1.6rem; color: var(--bs-body-color); vertical-align: -.15em; }
+.goalsBar { height: .9rem; background: var(--bs-secondary-color); opacity: 1; border: 1px solid var(--bs-body-color); }
+.goalsBar span { display: block; height: 100%; background: var(--flood); border-right: 2px solid var(--bs-body-bg); }
+
+.mini { display: grid; gap: 0; margin: 1.5rem 0 0; border-top: 1px solid var(--bs-body-color); }
+.mini > div { display: flex; justify-content: space-between; align-items: baseline; padding: .55rem 0; border-bottom: 1px solid var(--bs-border-color); }
+.mini dt { font-size: var(--fs-label); font-weight: 700; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--bs-secondary-color); }
+.mini dd { margin: 0; font-family: var(--font-display); font-size: 1.6rem; line-height: 1; }
+
+@media (max-width: 767.98px) {
+  .headline { grid-template-columns: 1fr; }
+}

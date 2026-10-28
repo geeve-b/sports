@@ -1,0 +1,83 @@
+/* Type roles beyond what custom.scss maps into Bootstrap. */
+
+.wp-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  line-height: .82;
+  letter-spacing: .005em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.wp-subtitle {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: .95;
+  margin: 0;
+}
+
+/* Section slate: a flood tab + heading over a full-width rule. */
+.wp-slate {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 0 0 1.25rem;
+  border-bottom: 1px solid var(--bs-body-color);
+}
+.wp-slate > h2,
+.wp-slate > h3 {
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  line-height: 1;
+  margin: 0;
+  padding: .35rem .9rem .15rem 0;
+}
+.wp-slate .wp-slate-tab {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  margin-right: .9rem;
+  padding: .3rem 1.4rem .3rem .7rem;
+  background: var(--flood);
+  color: var(--ink);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+.wp-slate .wp-slate-end {
+  margin-left: auto;
+  align-self: center;
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  padding-bottom: .25rem;
+}
+
+/* Huge stat number beside a tiny label. */
+.wp-big {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 11vw, 8.5rem);
+  line-height: .8;
+  font-variant-numeric: tabular-nums;
+}
+.wp-big-sm {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  line-height: .85;
+  font-variant-numeric: tabular-nums;
+}
+
+.wp-prose {
+  max-width: 64ch;
+  line-height: 1.6;
+}
+.wp-prose p { margin-bottom: .75rem; }
+
+.wp-meta {
+  font-size: .8125rem;
+  color: var(--bs-secondary-color);
+}
+
+.text-balance { text-wrap: balance; }
+.text-tabular { font-variant-numeric: tabular-nums; }

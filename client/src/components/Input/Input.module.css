@@ -1,0 +1,68 @@
+.field {
+  display: grid;
+  gap: .15rem;
+}
+
+.label {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  margin: 0;
+}
+.index {
+  font-family: var(--font-mono);
+  font-size: .625rem;
+  letter-spacing: 0;
+  color: var(--wp-accent-text);
+}
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+}
+.input {
+  flex: 1;
+  min-width: 0;
+}
+.suffix {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+  padding-left: .75rem;
+}
+
+/* Focus bar grows from the left over the 1px underline. */
+.bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--flood);
+  box-shadow: inset 0 -1px 0 var(--wp-accent-line); /* ink edge keeps it visible on day theme */
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-med) var(--ease-broadcast);
+  pointer-events: none;
+}
+.control:focus-within .bar { transform: scaleX(1); }
+.invalid .bar { background: var(--red-card); transform: scaleX(1); height: 2px; }
+
+.hint {
+  font-size: .75rem;
+  color: var(--bs-secondary-color);
+}
+.error {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin: .4rem 0 0;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--wp-red-text);
+}

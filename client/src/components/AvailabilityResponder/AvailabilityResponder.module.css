@@ -1,0 +1,22 @@
+.wrap { display: grid; gap: .9rem; }
+.buttons { display: flex; flex-wrap: wrap; gap: .6rem; }
+.reason {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1rem;
+  max-width: 560px;
+}
+.state {
+  margin: 0;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+}
+.compact { gap: .6rem; }
+
+@media (max-width: 480px) {
+  .reason { grid-template-columns: 1fr; }
+}

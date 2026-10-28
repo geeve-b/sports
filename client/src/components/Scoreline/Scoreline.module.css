@@ -1,0 +1,153 @@
+.scoreline {
+  margin: 0;
+  container-type: inline-size;
+}
+
+/* Competition tab hangs over the bug like a TV lower-third. */
+.comp {
+  display: inline-flex;
+  gap: 1rem;
+  margin: 0;
+  padding: .35rem calc(var(--cut) + .75rem) .35rem .9rem;
+  background: var(--flood);
+  color: var(--ink);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
+}
+.compDate { font-family: var(--font-mono); letter-spacing: .04em; font-weight: 500; }
+
+.bug {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  align-items: stretch;
+  border: 1px solid var(--bs-body-color);
+  background: var(--wp-surface-2);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.outcome {
+  grid-column: 1;
+  display: grid;
+  place-items: center;
+  width: 2.4em;
+  font-size: 1.25rem;
+  border-right: 1px solid var(--bs-body-color);
+}
+.outW { background: var(--flood); color: var(--ink); }
+.outD { background: var(--bs-body-color); color: var(--bs-body-bg); }
+.outL { background: var(--red-card-deep); color: var(--chalk); }
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  min-width: 0;
+  padding: .5rem 1rem;
+}
+.home { grid-column: 2; justify-content: flex-end; text-align: right; }
+.away { grid-column: 4; justify-content: flex-start; }
+.stripe {
+  flex: none;
+  width: 4px;
+  align-self: stretch;
+  background: var(--bs-body-color);
+}
+.full {
+  font-size: 2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.short { display: none; font-size: 1.5rem; }
+
+/* Score block: flood frame, ink flaps. */
+.score {
+  grid-column: 3;
+  display: flex;
+  align-items: center;
+  gap: .25em;
+  padding: .3rem .45rem;
+  background: var(--flood);
+  color: var(--ink);
+  font-size: 3.75rem;
+}
+.dash { font-size: .6em; padding-inline: .05em; }
+.ko {
+  font-family: var(--font-mono);
+  font-size: .5em;
+  font-weight: 500;
+  padding-inline: .5rem;
+}
+
+.status {
+  grid-column: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  min-width: 4.2rem;
+  padding-inline: .8rem;
+  border-left: 1px solid var(--bs-body-color);
+  font-family: var(--font-mono);
+  font-size: .9rem;
+  font-weight: 700;
+}
+.st_live { background: var(--red-card-deep); color: var(--chalk); }
+.st_postponed { color: var(--wp-red-text); }
+.liveDot {
+  width: .5rem;
+  height: .5rem;
+  background: var(--chalk);
+  animation: pulse 1s steps(2, jump-none) infinite;
+}
+@keyframes pulse { 50% { opacity: 0; } }
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .5rem 2rem;
+  padding: .6rem 0 0;
+}
+.scorers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-weight: 700;
+  font-size: .875rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.venue {
+  margin: 0;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+}
+
+/* ---- Compact row for fixture timelines ---- */
+.sm .bug { border-color: var(--bs-border-color); background: transparent; }
+.sm .full { display: none; }
+.sm .short { display: inline; font-size: 1.25rem; }
+.sm .team { padding: .35rem .7rem; }
+.sm .score { font-size: 1.6rem; padding: .2rem .35rem; }
+.sm .outcome { font-size: .95rem; border-right-color: var(--bs-border-color); }
+.sm .status { font-size: .75rem; min-width: 3.2rem; border-left-color: var(--bs-border-color); }
+
+/* Narrow containers: swap to three-letter codes. */
+@container (max-width: 560px) {
+  .full { display: none; }
+  .short { display: inline; }
+  .score { font-size: 2.5rem; }
+  .team { padding-inline: .6rem; }
+}

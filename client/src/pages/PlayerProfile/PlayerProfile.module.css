@@ -1,0 +1,132 @@
+.page { padding-top: 1.25rem; }
+
+/* Oversized shirt-number banner */
+.banner {
+  --status: var(--flood);
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: end;
+  gap: 0 2rem;
+  margin-bottom: 2.5rem;
+  padding: 1rem 0 1.5rem;
+  border-bottom: 2px solid var(--bs-body-color);
+  overflow: hidden;
+}
+.banner::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background: var(--status);
+}
+.doubtful { --status: repeating-linear-gradient(90deg, var(--bs-body-color) 0 6px, transparent 6px 10px); }
+.injured, .suspended { --status: var(--red-card); }
+
+.bigNumber {
+  font-family: var(--font-display);
+  font-size: clamp(9rem, 26vw, 21rem);
+  line-height: .86;
+  padding-top: .04em;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--bs-body-color);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+.injured .bigNumber, .suspended .bigNumber { -webkit-text-stroke-color: var(--red-card); }
+
+.bannerText { display: grid; gap: .8rem; justify-items: start; min-width: 0; padding-bottom: .25rem; }
+.back { padding: 0; display: inline-flex; align-items: center; gap: .35rem; }
+.posTab {
+  margin: 0;
+  padding: .3rem calc(var(--cut) + .75rem) .3rem .75rem;
+  background: var(--flood);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  font-weight: 700;
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
+}
+.name {
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  line-height: .82;
+  overflow-wrap: anywhere;
+}
+.first {
+  display: block;
+  font-family: var(--font-body);
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--bs-secondary-color);
+  margin-bottom: .4rem;
+}
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem 1.4rem;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+}
+.actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+
+@media (max-width: 767.98px) {
+  .banner { grid-template-columns: 1fr; }
+  .bigNumber { position: absolute; right: -.05em; top: .15em; opacity: .5; z-index: -1; }
+}
+
+/* Numbers column */
+.numbers {
+  display: grid;
+  gap: 1.75rem;
+  padding: 1.25rem 0 0 1.5rem;
+  border-left: 1px solid var(--bs-body-color);
+}
+.numberRow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; padding-top: 1.25rem; border-top: 1px solid var(--bs-border-color); }
+.attendance { display: grid; gap: .6rem; padding-top: 1.25rem; border-top: 2px solid var(--bs-body-color); }
+.meter { height: .4rem; background: var(--bs-border-color); }
+.meter span { display: block; height: 100%; background: var(--flood); box-shadow: inset 0 -1px 0 var(--wp-accent-line); }
+@media (max-width: 991.98px) {
+  .numbers { border-left: 0; padding-left: 0; border-top: 2px solid var(--bs-body-color); }
+}
+
+.tableLink { color: inherit; font-weight: 700; text-decoration: none; }
+.tableLink:hover { text-decoration: underline; }
+.res {
+  display: inline-block;
+  padding: .1rem .4rem;
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.W { background: var(--flood); color: var(--ink); }
+.D { background: var(--bs-body-color); color: var(--bs-body-bg); }
+.L { background: var(--red-card-deep); color: var(--chalk); }
+
+/* Injury log as a vertical timeline */
+.injuries { list-style: none; margin: 0; padding: 0 0 0 1.1rem; border-left: 2px solid var(--bs-border-color); }
+.injury { position: relative; padding: 0 0 1.25rem; display: grid; gap: .3rem; }
+.injury::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.1rem - 6px);
+  top: .2rem;
+  width: 10px;
+  height: 10px;
+  background: var(--bs-body-bg);
+  border: 2px solid var(--bs-secondary-color);
+}
+.open::before { background: var(--red-card); border-color: var(--red-card); }
+.injHead { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+.injType { margin: 0; font-family: var(--font-display); text-transform: uppercase; font-size: 1.4rem; line-height: 1; }
+.open .injType { color: var(--wp-red-text); }
+.injEdit { background: none; border: 1px solid var(--bs-border-color); color: var(--bs-body-color); width: 1.8rem; height: 1.8rem; display: grid; place-items: center; }
+.injEdit:hover { border-color: var(--bs-body-color); }

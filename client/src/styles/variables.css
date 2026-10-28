@@ -1,0 +1,27 @@
+/* Wildplay tokens for CSS Modules. Bootstrap's --bs-* vars cover body/border colours;
+   these cover the broadcast-specific bits. Theme-dependent tokens live in custom.scss §10. */
+:root {
+  --ink: #0E0F0C;
+  --chalk: #F2F0E6;
+  --flood: #E8FF3A;
+  --turf: #1F3B2D;
+  --red-card: #E5322D;
+  --red-card-deep: #C0241F;      /* red fills that carry text: 5.3:1 with chalk */
+
+  --font-display: "Anton", "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+  --font-body: "Barlow", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --fs-label: .6875rem;          /* 11px */
+  --tracking-label: .18em;
+  --tracking-btn: .14em;
+
+  --cut: 18px;                   /* lower-third angle */
+  --ease-broadcast: cubic-bezier(.77, 0, .18, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --dur-fast: 160ms;
+  --dur-med: 320ms;
+  --dur-slow: 600ms;
+
+  --focus-ring: 0 0 0 2px var(--ink), 0 0 0 4px var(--flood);
+}

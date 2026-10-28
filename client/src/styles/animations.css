@@ -1,0 +1,39 @@
+/* CSS keyframes. Framer Motion handles anything interactive. */
+
+@keyframes wp-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes wp-lower-third {
+  from { clip-path: inset(0 100% 0 0); transform: translateX(-24px); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+
+@keyframes wp-live-dot {
+  50% { opacity: .15; }
+}
+
+@keyframes wp-scan {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+/* Lower-third slide-in. Stagger with style={{ '--d': 2 }}.
+   `backwards` so the element rests visible and transforms stay free afterwards. */
+.wp-reveal {
+  animation: wp-lower-third .55s var(--ease-broadcast) backwards;
+  animation-delay: calc(var(--d, 0) * 70ms);
+}
+
+.wp-live-dot {
+  display: inline-block;
+  width: .5rem;
+  height: .5rem;
+  background: currentColor;
+  animation: wp-live-dot 1s steps(2, jump-none) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wp-reveal { animation: none; }
+}

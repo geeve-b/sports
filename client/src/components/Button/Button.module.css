@@ -1,0 +1,58 @@
+.btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Horizontal wipe: the hover colour slides in from the left,
+   and Bootstrap's instant hover background is held back. */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bs-btn-hover-bg);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--dur-med) var(--ease-broadcast);
+}
+.btn:not(:disabled):hover {
+  background-color: var(--bs-btn-bg);
+}
+.btn:not(:disabled):hover::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: .6em;
+}
+
+.ghost::before { display: none; }
+
+/* Angled lower-third edge. clip-path would cut an outer focus ring,
+   so the ring is drawn inset on these. */
+.cut {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  padding-right: calc(var(--bs-btn-padding-x) + 10px);
+}
+.cut:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--ink), inset 0 0 0 4px var(--flood);
+}
+
+.loading .label { visibility: hidden; }
+.dashes {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  letter-spacing: .3em;
+  animation: blink 1.1s steps(2, jump-none) infinite;
+}
+@keyframes blink { 50% { opacity: .25; } }

@@ -1,0 +1,180 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: 1.5rem;
+}
+.toolbarActions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+@media (max-width: 991.98px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+/* ---- Pitch ---- */
+.pitchWrap { position: relative; }
+.pitch {
+  position: relative;
+  aspect-ratio: 68 / 105;
+  max-height: 78vh;
+  max-width: 100%;
+  margin-inline: auto;
+  border: 1px solid var(--bs-body-color);
+  background: repeating-linear-gradient(180deg, #1F3B2D 0 9.5%, #1A3326 9.5% 19%);
+  color: rgba(242, 240, 230, .45);
+  touch-action: none;
+}
+.lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+.slot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 5.25rem;
+  height: 5.25rem;
+  display: grid;
+  place-items: center;
+  border: 1px dashed transparent;
+  transition: border-color var(--dur-fast) ease, background-color var(--dur-fast) ease;
+}
+.empty { border-color: rgba(242, 240, 230, .3); }
+.armed.empty { border-color: var(--flood); border-style: solid; }
+.over { border-color: var(--flood); border-style: solid; background: rgba(232, 255, 58, .16); }
+
+.slotBtn {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: 0;
+  color: rgba(242, 240, 230, .7);
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  font-weight: 700;
+}
+.slotBtn:hover { color: var(--flood); }
+
+/* ---- Tokens ---- */
+.token {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* On the pitch: a shirt with the surname on a bar under it */
+.shirt {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+.token.shirt,
+.shirt.token { flex-direction: column; gap: .2rem; }
+.token.shirt > .shirt {
+  width: 3rem;
+  height: 3rem;
+  background: var(--flood);
+  color: var(--ink);
+  font-size: 1.35rem;
+  clip-path: polygon(22% 0, 78% 0, 100% 18%, 88% 34%, 88% 100%, 12% 100%, 12% 34%, 0 18%);
+}
+.token.shirt > .tokenName {
+  padding: .05rem .35rem;
+  background: var(--ink);
+  color: var(--chalk);
+  font-size: .625rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* In lists: a chip */
+.token.chip {
+  width: 100%;
+  gap: .6rem;
+  padding: .35rem .5rem .35rem .35rem;
+  border: 1px solid var(--bs-border-color);
+  background: var(--bs-body-bg);
+  text-align: left;
+}
+.token.chip:hover { border-color: var(--bs-body-color); }
+.token.chip > .shirt {
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  background: var(--bs-body-color);
+  color: var(--bs-body-bg);
+  font-size: 1rem;
+}
+.token.chip > .tokenName {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  font-size: .875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.avail { flex: none; display: grid; place-items: center; width: 1.3rem; height: 1.3rem; }
+.avail_true { background: var(--flood); color: var(--ink); }
+.avail_false { background: var(--red-card-deep); color: var(--chalk); }
+.avail_null { border: 1px dashed var(--bs-secondary-color); color: var(--bs-secondary-color); }
+
+.unfit.chip > .tokenName { color: var(--bs-secondary-color); text-decoration: line-through; text-decoration-color: var(--red-card); }
+.unfit.shirt > .shirt { background: var(--red-card-deep); color: var(--chalk); }
+
+.held.chip { border-color: var(--flood); box-shadow: inset 4px 0 0 var(--flood); }
+.held.shirt > .shirt { outline: 3px solid var(--chalk); outline-offset: 2px; }
+.token:focus-visible { box-shadow: var(--focus-ring); }
+.token.shirt:focus-visible { box-shadow: none; }
+.token.shirt:focus-visible > .shirt { outline: 3px solid var(--flood); outline-offset: 3px; }
+
+/* ---- Zones ---- */
+.side { min-width: 0; }
+.zone {
+  display: grid;
+  gap: .4rem;
+  padding: .6rem;
+  border: 1px dashed var(--bs-border-color);
+  transition: border-color var(--dur-fast) ease, background-color var(--dur-fast) ease;
+}
+.benchZone { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); min-height: 4rem; }
+.poolZone { gap: 1rem; }
+.poolList { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: .4rem; }
+.zone.armed { border-color: var(--wp-accent-line); }
+.zone.over { border-color: var(--flood); border-style: solid; background: rgba(232, 255, 58, .08); }
+
+.zoneBtn {
+  grid-column: 1 / -1;
+  padding: .55rem .75rem;
+  background: none;
+  border: 1px dashed var(--bs-secondary-color);
+  color: var(--bs-secondary-color);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+.zoneBtn:not(:disabled):hover { border-color: var(--bs-body-color); color: var(--bs-body-color); }
+.zoneBtn:disabled { opacity: .7; }
+
+@media (max-width: 575.98px) {
+  .slot { width: 3.6rem; height: 3.6rem; }
+  .token.shirt > .shirt { width: 2.3rem; height: 2.3rem; font-size: 1.05rem; }
+  .token.shirt > .tokenName { font-size: .5625rem; }
+}

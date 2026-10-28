@@ -1,0 +1,162 @@
+.card {
+  --status: var(--flood);
+  --number-stroke: var(--wp-rule-strong);
+
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  aspect-ratio: 3 / 4;
+  max-width: 100%;
+  min-height: 300px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--bs-border-color);
+  border-top: 3px solid var(--status);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 14px, rgba(var(--bs-body-color-rgb), .025) 14px 15px),
+    var(--bs-body-bg);
+  transition: border-color var(--dur-fast) ease;
+  will-change: transform;
+}
+.card:hover,
+.card:focus-within { border-color: var(--wp-rule-strong); border-top-color: var(--status); }
+
+/* Giant printed jersey number, outlined, behind the name. */
+.number {
+  position: absolute;
+  right: -.06em;
+  bottom: .7em;
+  z-index: -1;
+  font-family: var(--font-display);
+  font-size: clamp(9rem, 22vw, 13rem);
+  line-height: .8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--number-stroke);
+  transform-origin: 85% 80%;
+  transition:
+    transform var(--dur-slow) var(--ease-spring),
+    -webkit-text-stroke-color var(--dur-fast) ease,
+    color var(--dur-med) ease;
+  user-select: none;
+}
+.card:hover .number,
+.card:focus-within .number {
+  transform: scale(1.14);
+  -webkit-text-stroke-color: var(--status);
+  color: rgba(232, 255, 58, .08);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: .75rem .9rem 0 0;
+}
+.pos {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: .3rem 1.4rem .3rem .9rem;
+  background: var(--flood);
+  color: var(--ink);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  margin-top: -.75rem;  /* hangs off the top rule like a TV tab */
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+.pip {
+  width: .6rem;
+  height: .6rem;
+  background: var(--status);
+}
+
+.name {
+  align-self: end;
+  padding: 0 .9rem .9rem;
+}
+.first {
+  display: block;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+}
+.last {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  line-height: .9;
+  overflow-wrap: anywhere;
+}
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+.link:focus-visible { box-shadow: none; }
+.card:has(.link:focus-visible) {
+  box-shadow: var(--focus-ring);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  border-top: 1px solid var(--bs-border-color);
+}
+.stats > div {
+  padding: .55rem .9rem;
+  display: grid;
+  gap: .1rem;
+}
+.stats > div + div { border-left: 1px solid var(--bs-border-color); }
+.stats dt {
+  font-size: .625rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+}
+.stats dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Fitness states ---- */
+.fit { --status: var(--flood); }
+.doubtful {
+  --status: repeating-linear-gradient(45deg, var(--bs-body-color) 0 2px, transparent 2px 4px);
+}
+.doubtful { border-top-color: var(--bs-body-color); border-top-style: dashed; }
+.injured { --status: var(--red-card); --number-stroke: rgba(229, 50, 45, .55); }
+.injured .number { -webkit-text-stroke-color: var(--number-stroke); }
+.suspended { --status: var(--red-card); }
+.suspended .pip { background: transparent; outline: 2px solid var(--red-card); outline-offset: -2px; }
+
+/* Doubtful uses a hatch, which can't be a border/stroke colour. */
+.doubtful .pip { background: repeating-linear-gradient(45deg, var(--bs-body-color) 0 2px, transparent 2px 4px); border: 1px solid var(--bs-body-color); }
+.doubtful:hover .number,
+.doubtful:focus-within .number { -webkit-text-stroke-color: var(--bs-body-color); }
+.injured:hover .number,
+.injured:focus-within .number { -webkit-text-stroke-color: var(--red-card); color: rgba(229, 50, 45, .08); }
+.suspended:hover .number,
+.suspended:focus-within .number { -webkit-text-stroke-color: var(--red-card); color: transparent; }
+.injured:hover, .injured:focus-within,
+.suspended:hover, .suspended:focus-within { border-top-color: var(--red-card); }
+
+/* Day theme: flood fill on the number reads as dirt; use ink instead. */
+:global([data-bs-theme="light"]) .fit:hover .number,
+:global([data-bs-theme="light"]) .fit:focus-within .number {
+  -webkit-text-stroke-color: var(--ink);
+  color: rgba(232, 255, 58, .5);
+}
+:global([data-bs-theme="light"]) .pos { box-shadow: inset 0 0 0 1px var(--ink); }

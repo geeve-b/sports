@@ -1,0 +1,41 @@
+.flip {
+  display: inline-flex;
+  gap: .06em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.cell {
+  position: relative;
+  display: inline-grid;
+  perspective: 600px;
+}
+
+/* Old and new digit share one grid cell while they flip. */
+.digit {
+  grid-area: 1 / 1;
+  display: block;
+  backface-visibility: hidden;
+  transform-origin: 50% 50%;
+}
+
+/* Scoreboard tiles: dark flap with a hinge line across the middle. */
+.tiles .cell {
+  background: var(--ink);
+  color: var(--chalk);
+  border: 1px solid rgba(242, 240, 230, .18);
+  padding: .08em .14em;
+  min-width: .9em;
+  justify-items: center;
+}
+.tiles .cell::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(0, 0, 0, .7);
+  box-shadow: 0 1px 0 rgba(242, 240, 230, .08);
+  pointer-events: none;
+}

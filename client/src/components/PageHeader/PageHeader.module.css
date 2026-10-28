@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding: 1.75rem 0 1.25rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 2px solid var(--bs-body-color);
+}
+.main { display: grid; gap: .6rem; min-width: 0; }
+
+.eyebrow {
+  justify-self: start;
+  margin: 0;
+  padding: .3rem calc(var(--cut) + .75rem) .3rem .75rem;
+  background: var(--flood);
+  color: var(--ink);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.25rem;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+}
