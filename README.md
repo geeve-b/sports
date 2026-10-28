@@ -64,8 +64,9 @@ The API serves the built client from the same origin, so the auth cookie is firs
 
 ### Vercel
 
-[`vercel.json`](vercel.json) deploys the repo as one project with two services on one domain: `client` (Vite, serves `/`) and `server` (Express, serves `/api/*`, entrypoint `app.js`). The client calls the API at the relative path `/api`, so the cookie stays first-party.
+[`vercel.json`](vercel.json) deploys the repo as one project on one domain. Vercel builds the client into `client/dist` as static files, and [`api/index.js`](api/index.js) runs the Express app as a serverless function for every `/api/*` request. Other paths fall back to `index.html` for React Router. The client calls the API at the relative path `/api`, so the cookie stays first-party.
 
+- Import the repo with the root directory `./` and the framework preset **Other**; the build settings come from `vercel.json`.
 - In the Vercel project, set `MONGO_URI` and `JWT_SECRET` (the API refuses to start in production without a real secret).
 - In MongoDB Atlas → Network Access, allow `0.0.0.0/0`, since Vercel functions have no fixed IP.
 - The API connects to MongoDB on the first request and reuses the connection while the function is warm.
